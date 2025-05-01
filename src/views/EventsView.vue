@@ -1,12 +1,7 @@
 <template>
-    <h1>events</h1>
-    <RouterLink to="/events/details">About</RouterLink>
+  <EventsList/>
 </template>
 
 <script setup>
-    import { RouterLink } from 'vue-router';
+    import { EventsList } from '@/components';
 </script>
-
-<style lang="css" scoped>
-
-</style>
