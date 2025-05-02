@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 
 // Import Nuxt config
-const config = require('./nuxt.config.js');
+const config = require('./nuxt.config.ts');
 config.dev = false;  // Disable dev mode in production
 
 // Initialize Nuxt
