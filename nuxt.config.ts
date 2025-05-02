@@ -9,7 +9,4 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt'  // Add Pinia module
   ],
-  nitro: {
-    preset: 'firebase'
-  }
 })
