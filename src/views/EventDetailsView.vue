@@ -1,28 +1,28 @@
 <template>
     <h1>events details</h1>
+    <div>{{ JSON.stringify(event) }}</div>
 </template>
 
 <script>
   import { useRoute } from 'vue-router';
-  import { useEventsStore } from '@/stores/events';
-  import { computed, onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
+  import axios from 'axios'
 
   export default {
     setup() {
       const route = useRoute()
-      const store = useEventsStore()
+      const id = parseInt(route.params.id);
+      const event = ref(null)
 
-      onMounted(()=> {
-        if(!store.events.length) {
-          store.fetchEvents()
+      onMounted(async ()=> {
+        try {
+          const { data } = await axios.get('https://run.mocky.io/v3/474a379b-8894-47c9-a99c-39939a947bfd');
+          event.value = data.find(e => e.id === id)
+        } catch(err){
+          console.error(err)
         }
       })
 
-      const event = computed(() => {
-        return route.state || store.events[Number(route.params.id)]
-      })
-
-      console.log(route.state)
       return {
         event
       }

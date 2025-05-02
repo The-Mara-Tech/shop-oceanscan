@@ -9,7 +9,7 @@
       :key="events.indexOf(event)"
       :to="{
         name:'event-details',
-        params: { id: events.indexOf(event) },
+        params: { id: event.id },
         state: event
       }"
       class="event-card"
