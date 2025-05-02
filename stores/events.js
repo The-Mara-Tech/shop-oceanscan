@@ -16,9 +16,11 @@ export const useEventsStore = defineStore('events', {
             try {
                 const { data } = await axios.get('https://run.mocky.io/v3/474a379b-8894-47c9-a99c-39939a947bfd');
                 this.events = data;
+                return data;
             } catch (err){
                 this.error = err.response?.data?.message || 'failed to fetch events';
                 console.error(err);
+                return null;
             } finally {
                 this.loading = false;
             }
