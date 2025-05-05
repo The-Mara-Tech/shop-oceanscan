@@ -1,108 +1,73 @@
 <template>
-    <div>
-      <h2>event details</h2>
-      <p>{{ JSON.stringify(event) }}</p>
-    </div>
+  <div>
+    <h2>event details</h2>
+    <p>{{ JSON.stringify(event) }}</p>
+  </div>
 </template>
 
 <script>
-import { defineComponent, computed, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useAsyncData, useHead } from '#app';
-import { ref } from 'vue';
+  import { defineComponent, computed, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useAsyncData, useHead } from '#app'
 
-export default defineComponent({
-  name: 'EventDetails',
-  setup() {
-    const route = useRoute();
-    const id = route.params.id;
-    const baseUrl = 'YOUR_BASE_URL'; // Replace with your actual base URL
+  export default defineComponent({
+    name: 'EventDetails',
 
-    const event = ref(null); // Initialize event ref
-    const { pending: isLoading, error, data } = useAsyncData(
-      'events:id',
-      async () => {
-        const res = await fetch(
-          'https://run.mocky.io/v3/474a379b-8894-47c9-a99c-39939a947bfd'
-        );
-        if (!res.ok) {
-          throw new Error(`Failed to fetch event data: ${res.status}`);
-        }
-        const events = await res.json();
-        return events.find((e) => e.id === parseInt(id)) || null;
-      },
-      { initialCache: true }
-    );
+    setup() {
+      const route = useRoute()
+      const id = route.params.id
 
-    // Update the event ref.  This is important to ensure reactivity
-    watch(data, (newData) => {
-      event.value = newData;
-    }, { immediate: true }); // set immediate to true
+      const { data: event, pending, error } = useAsyncData('events:id', async () => {
+          const res = await fetch(`https://run.mocky.io/v3/474a379b-8894-47c9-a99c-39939a947bfd`)
+          const events = await res.json()
+          return events.find((e) => e.id === parseInt(id)) || null
+      }, { initialCache: true })
 
-    useHead({
-      title: computed(() => event.value?.event || 'Event Details'),
-      meta: [
-        {
-          name: 'title',
-          content: computed(() => event.value?.event || 'Event Details'),
-        },
-        {
-          name: 'description',
-          content: computed(() => event.value?.description || ''),
-        },
-        // Open Graph / Facebook
-        { property: 'og:type', content: 'website' },
-        {
-          property: 'og:url',
-          content: computed(() => `${baseUrl}${route.fullPath}`),
-        },
-        {
-          property: 'og:title',
-          content: computed(() => event.value?.event || 'Event Details'),
-        },
-        {
-          property: 'og:description',
-          content: computed(() => event.value?.description || ''),
-        },
-        { property: 'og:image', content: computed(() => event.value?.image || '') },
-        // Twitter
-        { property: 'twitter:card', content: 'summary_large_image' },
-        {
-          property: 'twitter:url',
-          content: computed(() => `${baseUrl}${route.fullPath}`),
-        },
-        {
-          property: 'twitter:title',
-          content: computed(() => event.value?.event || 'Event Details'),
-        },
-        {
-          property: 'twitter:description',
-          content: computed(() => event.value?.description || ''),
-        },
-        { property: 'twitter:image', content: computed(() => event.value?.image || '') },
-      ],
-      link: [{ rel: 'canonical', href: computed(() => `${baseUrl}${route.fullPath}`) }],
-    });
+      useHead({
+        title: 'Sample Event | Event Details',
+        meta: [
+          { name: 'title', content: 'Sample Event | Event Details' },
+          {
+            name: 'description',
+            content:
+              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
+          },
 
-    // Use a watch effect to react to changes in 'event'
-    watch(
-      event,
-      (newValue) => {
-        if (newValue) {
-          // Perform actions that depend on the loaded event data here
-          console.log('Event data loaded (inside watch):', newValue);
-        }
-      },
-      { immediate: true } // Add immediate: true
-    );
+          // Open Graph / Facebook
+          { property: 'og:type', content: 'website' },
+          { property: 'og:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
+          { property: 'og:title', content: 'Sample Event | Event Details' },
+          {
+            property: 'og:description',
+            content:
+              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
+          },
+          { property: 'og:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' },
 
-    return {
-      event,
-      isLoading,
-      hasError: computed(() => error.value),
-      errorMessage: computed(() => error.value?.message),
-    };
-  },
-});
+          // Twitter
+          { property: 'twitter:card', content: 'summary_large_image' },
+          { property: 'twitter:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
+          { property: 'twitter:title', content: 'Sample Event | Event Details' },
+          {
+            property: 'twitter:description',
+            content:
+              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
+          },
+          { property: 'twitter:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' }
+        ],
+        link: [
+          { rel: 'canonical', href: 'https://shop-oceanscan.onrender.com/events/1' }
+        ]
+      })
+
+
+      return {
+        event,
+        isLoading: pending,
+        hasError: computed(() => error.value),
+        errorMessage: computed(() => error.value?.message)
+      }
+    }
+  })
 
 </script>
