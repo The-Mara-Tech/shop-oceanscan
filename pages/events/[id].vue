@@ -23,33 +23,21 @@
             return events.find((e) => e.id === parseInt(id)) || null
         }, { initialCache: true })
 
-        watch(event, (newEvent) => {
-          if (newEvent) {
-            useHead({
-              title: `${newEvent.event} | Event Details`,
-              meta: [
-                { name: 'description', content: newEvent.description || `` },
-                { name: 'og:title', content: `${newEvent.event} | ` },
-                { name: 'og:description', content: newEvent.description || `` },
-                { name: 'og:image', content: newEvent.image || 'default_image.jpg' },
-                { name: 'og:url', content: `${window.location.href}` },
-                { name: 'og:type', content: 'website' },
-                { name: 'og:site_name', content: newEvent.event },
-                { name: 'og:video', content: newEvent.videoUrl || 'default_video.mp4' }
-              ],
-              link: [
-                { rel: 'canonical', href: window.location.href }
-              ]
-            })
-          }
-        }, { immediate: true })
-
-        onBeforeMount(() => {
-          if (event.value) {
-            useHead({
-              title: `${event.value.event} | Event Details`,
-            })
-          }
+        useHead({
+          title: 'Sample Event | Event Details',
+          meta: [
+            { name: 'description', content: 'This is a hardcoded event description.' },
+            { name: 'og:title', content: 'Sample Event | Event Details' },
+            { name: 'og:description', content: 'This is a hardcoded event description.' },
+            { name: 'og:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' },
+            { name: 'og:url', content: `${window.location.href}` },
+            { name: 'og:type', content: 'website' },
+            { name: 'og:site_name', content: 'Sample Event' },
+            { name: 'og:video', content: 'https://example.com/sample-video.mp4' }
+          ],
+          link: [
+            { rel: 'canonical', href: window.location.href }
+          ]
         })
 
         return {
