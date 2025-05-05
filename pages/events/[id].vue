@@ -24,39 +24,27 @@
       }, { initialCache: true })
 
       useHead({
-        title: 'Sample Event | Event Details',
+        title: `${event.event}`,
         meta: [
-          { name: 'title', content: 'Sample Event | Event Details' },
-          {
-            name: 'description',
-            content:
-              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
-          },
+          { name: 'title', content: `${event.event}` },
+          { name: 'description', content: `${event.description}`},
 
           // Open Graph / Facebook
           { property: 'og:type', content: 'website' },
-          { property: 'og:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
-          { property: 'og:title', content: 'Sample Event | Event Details' },
-          {
-            property: 'og:description',
-            content:
-              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
-          },
-          { property: 'og:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' },
+          { property: 'og:url', content: `${window.location.href}` },
+          { property: 'og:title', content: `${event.event}` },
+          { property: 'og:description', content:`${event.description}` },
+          { property: 'og:image', content: `${event.image}` },
 
           // Twitter
           { property: 'twitter:card', content: 'summary_large_image' },
-          { property: 'twitter:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
-          { property: 'twitter:title', content: 'Sample Event | Event Details' },
-          {
-            property: 'twitter:description',
-            content:
-              "Join us for an electrifying night at the Amapiano Groove (Pretty Gals Big Boyz Edition), where the beats are fresh, the vibes are unmatched, and the energy is contagious. It's where BLENDS, CULTURE AND GROOVE"
-          },
-          { property: 'twitter:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' }
+          { property: 'twitter:url', content: `${window.location.href}` },
+          { property: 'twitter:title', content: `${event.event}` },
+          { property: 'twitter:description', content: `${event.description}`},
+          { property: 'twitter:image', content: `${event.image}` }
         ],
         link: [
-          { rel: 'canonical', href: 'https://shop-oceanscan.onrender.com/events/1' }
+          { rel: 'canonical', href: `${window.location.href}` }
         ]
       })
 
