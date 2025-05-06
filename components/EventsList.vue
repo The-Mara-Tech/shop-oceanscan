@@ -5,7 +5,18 @@
     <div v-if="hasError">{{ errorMessage }}</div>
     <div v-if="!isLoading && !hasError" class="cards-wrapper">
       <div v-for="event in events" :key="event.id">
-        <NuxtLink :to="{ name: 'events-id', params: { id: event.id } }" class="event-card">
+        <NuxtLink 
+          :to="{ 
+            name: 'events-id', 
+            params: { id: event.id },
+            query: {
+              name: event.event,
+              description: event.description,
+              image: event.image
+            } 
+          }" 
+          class="event-card"
+        >
           <img :src="event.image" alt="pic" class="event-image"/>
           <div class="event-content">
             <span class="event-title">{{ event.event }}</span>

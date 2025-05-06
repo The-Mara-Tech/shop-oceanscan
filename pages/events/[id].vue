@@ -11,11 +11,15 @@
   import { useAsyncData, useHead } from '#app'
 
   export default defineComponent({
-    name: 'EventDetails',
+    name: 'events-id',
 
     setup() {
       const route = useRoute()
       const id = route.params.id
+      const eventName = computed(() => route.query.name)
+      const eventDescription = computed(() => route.query.description)
+      const image = computed(() => route.query.image)
+      const fullUrlWithoutQuery = computed(() => `${baseUrl}${route.path}`)
 
       const { data: event, pending, error } = useAsyncData('events:id', async () => {
           const res = await fetch(`https://run.mocky.io/v3/474a379b-8894-47c9-a99c-39939a947bfd`)
@@ -24,25 +28,25 @@
       }, { initialCache: true })
 
       useHead({
-        title: 'Sample Event | Event Details',
+        title: `${eventName.value}`,
         meta: [
-          { name: 'title', content: 'Sample Event | Event Details' },
-          { name: 'description', content: " test description" },
+          { name: 'title', content: `${eventName.value}` },
+          { name: 'description', content: `${eventDescription.value}` },
 
           { property: 'og:type', content: 'website' },
-          { property: 'og:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
-          { property: 'og:title', content: 'Sample Event | Event Details' },
-          { property: 'og:description', content: "test description" },
-          { property: 'og:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' },
+          { property: 'og:url', content: `${fullUrlWithoutQuery}` },
+          { property: 'og:title', content: `${eventName.value}` },
+          { property: 'og:description', content: `${eventDescription.value}` },
+          { property: 'og:image', content: `${image.value}` },
 
           { property: 'twitter:card', content: 'summary_large_image' },
-          { property: 'twitter:url', content: 'https://shop-oceanscan.onrender.com/events/1' },
-          { property: 'twitter:title', content: 'Sample Event | Event Details' },
-          { property: 'twitter:description', content: "test description" },
-          { property: 'twitter:image', content: 'https://madfun.imgix.net/Roast_House_Comedy_984.jpeg?w=412&h=412&fit=crop&auto=format' }
+          { property: 'twitter:url', content: `${fullUrlWithoutQuery}` },
+          { property: 'twitter:title', content: `${eventName.value}` },
+          { property: 'twitter:description', content: `${eventDescription.value}` },
+          { property: 'twitter:image', content: `${image.value}` }
         ],
         link: [
-          { rel: 'canonical', href: 'https://shop-oceanscan.onrender.com/events/1' }
+          { rel: 'canonical', href: `${fullUrlWithoutQuery}` }
         ]
       })
 
